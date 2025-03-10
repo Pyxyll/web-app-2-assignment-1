@@ -4,6 +4,9 @@ import PageTemplate from "../components/templateMovieListPage";
 import { useQuery } from "@tanstack/react-query";
 import Spinner from "../components/spinner";
 import AddToFavoritesButton from "../components/cardIcons/addToFavorites";
+import RemoveFromFavorites from "../components/cardIcons/removeFromFavorites";
+import WriteReview from "../components/cardIcons/writeReview";
+
 
 const HomePage = (props) => {
   const { data, error, isPending, isError } = useQuery({
