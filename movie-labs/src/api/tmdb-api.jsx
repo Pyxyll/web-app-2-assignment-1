@@ -71,6 +71,7 @@ export const getMovie = (args) => {
    });
   };
 
+
   export const getMovieReviews = ({ queryKey }) => {
     const [, idPart] = queryKey;
     const { id } = idPart;

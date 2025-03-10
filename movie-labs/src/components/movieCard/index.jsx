@@ -1,4 +1,4 @@
-import React, { useContext  } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -12,19 +12,17 @@ import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid2";
-import img from '../../images/film-poster-placeholder.png'
-import Avatar from '@mui/material/Avatar';
+import img from "../../images/film-poster-placeholder.png";
+import Avatar from "@mui/material/Avatar";
 import { MoviesContext } from "../../contexts/moviesContext";
 
-
-
-export default function MovieCard({ movie }) { 
+export default function MovieCard({ movie, action }) {
   const { favorites, addToFavorites } = useContext(MoviesContext);
 
   if (favorites.find((id) => id === movie.id)) {
     movie.favorite = true;
   } else {
-    movie.favorite = false
+    movie.favorite = false;
   }
 
   const handleAddToFavorite = (e) => {
@@ -37,7 +35,7 @@ export default function MovieCard({ movie }) {
       <CardHeader
         avatar={
           movie.favorite ? (
-            <Avatar sx={{ backgroundColor: 'red' }}>
+            <Avatar sx={{ backgroundColor: "red" }}>
               <FavoriteIcon />
             </Avatar>
           ) : null
@@ -59,13 +57,13 @@ export default function MovieCard({ movie }) {
       />
       <CardContent>
         <Grid container>
-          <Grid size={{xs: 6}}>
+          <Grid size={{ xs: 6 }}>
             <Typography variant="h6" component="p">
               <CalendarIcon fontSize="small" />
               {movie.release_date}
             </Typography>
           </Grid>
-          <Grid size={{xs: 6}}>
+          <Grid size={{ xs: 6 }}>
             <Typography variant="h6" component="p">
               <StarRateIcon fontSize="small" />
               {"  "} {movie.vote_average}{" "}
@@ -74,9 +72,8 @@ export default function MovieCard({ movie }) {
         </Grid>
       </CardContent>
       <CardActions disableSpacing>
-      <IconButton aria-label="add to favorites" onClick={handleAddToFavorite}>
-        <FavoriteIcon color="primary" fontSize="large" />
-    </IconButton>
+        {action(movie)}
+
         <Link to={`/movies/${movie.id}`}>
           <Button variant="outlined" size="medium" color="primary">
             More Info ...
