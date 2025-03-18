@@ -31,24 +31,50 @@ export default function MovieCard({ movie, action }) {
   };
 
   return (
-    <Card>
+    <Card
+      sx={{
+        background: "linear-gradient(135deg, rgba(63,81,181,1) 0%, rgba(33,150,243,1) 100%)",
+        color: "white",
+        borderRadius: 4,
+        boxShadow: 8,
+        overflow: "hidden",
+        transition: "transform 0.3s, box-shadow 0.3s",
+        "&:hover": {
+          transform: "scale(1.05)",
+          boxShadow: 12,
+        },
+      }}
+    >
       <CardHeader
         avatar={
           movie.favorite ? (
-            <Avatar sx={{ backgroundColor: "red" }}>
+            <Avatar sx={{ backgroundColor: "red", boxShadow: "0px 2px 4px rgba(0,0,0,0.3)" }}>
               <FavoriteIcon />
             </Avatar>
           ) : null
         }
         title={
-          <Typography variant="h5" component="p">
-            {movie.title}{" "}
+          <Typography
+            variant="h5"
+            component="p"
+            sx={{
+              fontWeight: "bold",
+              textShadow: "1px 1px 2px rgba(0,0,0,0.5)",
+            }}
+          >
+            {movie.title}
           </Typography>
         }
       />
-
       <CardMedia
-        sx={{ height: 500 }}
+        sx={{
+          height: 500,
+          filter: "brightness(0.8)",
+          transition: "filter 0.3s",
+          "&:hover": {
+            filter: "brightness(1)",
+          },
+        }}
         image={
           movie.poster_path
             ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
@@ -56,26 +82,58 @@ export default function MovieCard({ movie, action }) {
         }
       />
       <CardContent>
-        <Grid container>
-          <Grid size={{ xs: 6 }}>
-            <Typography variant="h6" component="p">
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <Typography
+              variant="h6"
+              component="p"
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+              }}
+            >
               <CalendarIcon fontSize="small" />
               {movie.release_date}
             </Typography>
           </Grid>
-          <Grid size={{ xs: 6 }}>
-            <Typography variant="h6" component="p">
+          <Grid item xs={6}>
+            <Typography
+              variant="h6"
+              component="p"
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+              }}
+            >
               <StarRateIcon fontSize="small" />
-              {"  "} {movie.vote_average}{" "}
+              {movie.vote_average}
             </Typography>
           </Grid>
         </Grid>
       </CardContent>
-      <CardActions disableSpacing>
+      <CardActions
+        disableSpacing
+        sx={{
+          padding: 2,
+          justifyContent: "space-between",
+        }}
+      >
         {action(movie)}
-
-        <Link to={`/movies/${movie.id}`}>
-          <Button variant="outlined" size="medium" color="primary">
+        <Link to={`/movies/${movie.id}`} style={{ textDecoration: "none" }}>
+          <Button
+            variant="contained"
+            size="medium"
+            sx={{
+              backgroundColor: "rgba(255,255,255,0.9)",
+              color: "black",
+              fontWeight: "bold",
+              "&:hover": {
+                backgroundColor: "rgba(255,255,255,1)",
+              },
+            }}
+          >
             More Info ...
           </Button>
         </Link>

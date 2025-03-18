@@ -57,17 +57,45 @@ export default function FilterMoviesCard(props) {
   return (
     <Card
       sx={{
-        backgroundColor: "rgb(204, 204, 0)",
+        background: "linear-gradient(135deg, rgba(63,81,181,1) 0%, rgba(33,150,243,1) 100%)",
+        color: "white",
+        borderRadius: 4,
+        boxShadow: 5,
+        overflow: "hidden",
       }}
       variant="outlined"
     >
-      <CardContent>
-        <Typography variant="h5" component="h1">
+      <CardMedia
+        sx={{
+          height: 300,
+          filter: "brightness(0.7)",
+        }}
+        image={img}
+        title="Filter"
+      />
+      <CardContent sx={{ padding: 3 }}>
+        <Typography
+          variant="h4"
+          component="h1"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
+            fontWeight: "bold",
+            marginBottom: 2,
+          }}
+        >
           <SearchIcon fontSize="large" />
-          Filter the movies.
+          Filter the Movies
         </Typography>
         <TextField
-          sx={{ ...formControl }}
+          sx={{
+            ...formControl,
+            "& .MuiFilledInput-root": {
+              backgroundColor: "white",
+              borderRadius: 2,
+            },
+          }}
           id="filled-search"
           label="Search field"
           type="search"
@@ -75,8 +103,15 @@ export default function FilterMoviesCard(props) {
           value={props.titleFilter}
           onChange={handleTextChange}
         />
-
-        <FormControl sx={{ ...formControl }}>
+        <FormControl
+          sx={{
+            ...formControl,
+            "& .MuiSelect-select": {
+              backgroundColor: "white",
+              borderRadius: 2,
+            },
+          }}
+        >
           <InputLabel id="genre-label">Genre</InputLabel>
           <Select
             labelId="genre-label"
@@ -94,14 +129,6 @@ export default function FilterMoviesCard(props) {
             })}
           </Select>
         </FormControl>
-      </CardContent>
-      <CardMedia sx={{ height: 300 }} image={img} title="Filter" />
-      <CardContent>
-        <Typography variant="h5" component="h1">
-          <SearchIcon fontSize="large" />
-          Filter the movies.
-          <br />
-        </Typography>
       </CardContent>
     </Card>
   );
