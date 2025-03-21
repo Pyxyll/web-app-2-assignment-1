@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography";
 import Drawer from "@mui/material/Drawer";
 import MovieReviews from "../movieReviews"
 import MovieVideos from "../movieVideos"
+import MovieDetailsHeader from "../movieDetailsHeader";
 
 
 const root = {
@@ -26,6 +27,7 @@ const MovieDetails = ({ movie }) => {  // Don't miss this!
   const [drawerOpen, setDrawerOpen] = useState(false);  
   return (
     <>
+      <MovieDetailsHeader movie={movie} />
       <Typography variant="h5" component="h3">
         Overview
       </Typography>
