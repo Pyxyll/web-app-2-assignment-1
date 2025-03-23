@@ -8,6 +8,7 @@ import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import MovieIcon from '@mui/icons-material/Movie';
 import Fade from '@mui/material/Fade';
+import { styled } from '@mui/material/styles';
 
 const VideoContainer = styled(Box)(({ theme }) => ({
   position: 'relative',
