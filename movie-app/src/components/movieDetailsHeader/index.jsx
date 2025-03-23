@@ -29,7 +29,7 @@ export default function MovieDetailsHeader({ movie }) {
           height: "100%",
           backgroundImage: `url(https://image.tmdb.org/t/p/w1920/${movie.backdrop_path})`,
           backgroundSize: "cover",
-          backgroundPosition: "center",
+          backgroundPosition: "center-bottom",
           filter: "brightness(0.4)",
           zIndex: -1,
         },

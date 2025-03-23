@@ -1,10 +1,39 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
 import { useQuery } from "@tanstack/react-query";
 import { getMovieVideos } from "../../api/tmdb-api";
 import Spinner from '../spinner';
 import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardMedia from "@mui/material/CardMedia";
+import MovieIcon from '@mui/icons-material/Movie';
+import Fade from '@mui/material/Fade';
+
+const VideoContainer = styled(Box)(({ theme }) => ({
+  position: 'relative',
+  paddingTop: '56.25%', // 16:9 Aspect Ratio
+  width: '100%',
+  height: 0,
+  overflow: 'hidden',
+  '& iframe': {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    border: 'none',
+    borderRadius: '20px',
+  },
+}));
+
+const EmptyState = ({ message }) => (
+  <StyledPaper sx={{ p: 3, my: 3, textAlign: 'center' }}>
+    <MovieIcon sx={{ fontSize: 60, color: 'text.secondary', opacity: 0.6, mb: 2 }} />
+    <Typography variant="h6" color="text.secondary">
+      {message}
+    </Typography>
+  </StyledPaper>
+);
 
 export default function MovieVideos({ movie }) {
   const { data, error, isPending, isError } = useQuery({
@@ -17,15 +46,11 @@ export default function MovieVideos({ movie }) {
   }
 
   if (isError) {
-    return <h1>{error.message}</h1>;
+    return <EmptyState message={`Error: ${error.message}`} />;
   }
 
   if (!data.results || data.results.length === 0) {
-    return (
-      <Paper sx={{ padding: 2, marginTop: 2 }}>
-        <Typography variant="h6">No videos available for this movie</Typography>
-      </Paper>
-    );
+    return <EmptyState message="No videos available for this movie" />;
   }
   
   // Filter for YouTube trailers only
@@ -36,35 +61,40 @@ export default function MovieVideos({ movie }) {
   
   // If no YouTube trailer is found
   if (!youtubeTrailer) {
-    return (
-      <Paper sx={{ padding: 2, marginTop: 2 }}>
-        <Typography variant="h6">No trailer available for this movie</Typography>
-      </Paper>
-    );
+    return <EmptyState message="No trailer available for this movie" />;
   }
 
   return (
-    <Paper sx={{ padding: 2, marginTop: 2 }}>
-      <Typography variant="h5" gutterBottom>
-        Official Trailer
-      </Typography>
-      
-      <Box sx={{ width: '100%', height: '400px', marginBottom: 2 }}>
-        <iframe
-          width="100%"
-          height="100%"
-          src={`https://www.youtube.com/embed/${youtubeTrailer.key}`}
-          title={youtubeTrailer.name}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></iframe>
-      </Box>
-      
-      <Box sx={{ mt: 2 }}>
-        <Typography variant="body2" color="text.secondary">
-          {youtubeTrailer.name}
-        </Typography>
-      </Box>
-    </Paper>
+    <Fade in={true} timeout={600}>
+        <Card sx={{ bgcolor: 'transparent', boxShadow: 'none' }}>
+          <Box sx={{ p: 3, pb: 0 }}>
+            <Typography 
+              variant="h5" 
+              component="h2" 
+              gutterBottom 
+              sx={{ 
+                fontWeight: 700,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1
+              }}
+            >
+              <MovieIcon color="primary" />
+              Official Trailer
+            </Typography>
+          </Box>
+          
+          <CardMedia>
+            <VideoContainer>
+              <iframe
+                src={`https://www.youtube.com/embed/${youtubeTrailer.key}`}
+                title={youtubeTrailer.name}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </VideoContainer>
+          </CardMedia>
+        </Card>
+    </Fade>
   );
 }
