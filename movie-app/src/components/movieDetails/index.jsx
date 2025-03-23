@@ -28,52 +28,6 @@ const MovieDetails = ({ movie }) => {  // Don't miss this!
   return (
     <>
       <MovieDetailsHeader movie={movie} />
-      <Typography variant="h5" component="h3">
-        Overview
-      </Typography>
-
-      <Typography variant="h6" component="p">
-        {movie.overview}
-      </Typography>
-
-      <Paper 
-        component="ul" 
-        sx={{...root}}
-      >
-        <li>
-          <Chip label="Genres" sx={{...chip}} color="primary" />
-        </li>
-        {movie.genres.map((g) => (
-          <li key={g.name}>
-            <Chip label={g.name} sx={{...chip}} />
-          </li>
-        ))}
-      </Paper>
-      <Paper component="ul" sx={{...root}}>
-        <Chip icon={<AccessTimeIcon />} label={`${movie.runtime} min.`} />
-        <Chip
-          icon={<MonetizationIcon />}
-          label={`${movie.revenue.toLocaleString()}`}
-        />
-        <Chip
-          icon={<StarRate />}
-          label={`${movie.vote_average} (${movie.vote_count})`}
-        />
-        <Chip label={`Released: ${movie.release_date}`} />
-      </Paper>
-      <Paper 
-        component="ul" 
-        sx={{...root}}
-      >
-        <li>
-          <Chip label="Production Countries" sx={{...chip}} color="primary" />
-        </li>
-        {movie.production_countries.map((p) => (
-          <li key={p.name}>
-            <Chip label={p.name} sx={{...chip}} />
-          </li>
-        ))}
-      </Paper>
       <MovieVideos movie={movie} />
       <Fab
         color="secondary"
