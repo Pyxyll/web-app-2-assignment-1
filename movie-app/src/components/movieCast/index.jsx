@@ -28,7 +28,7 @@ export default function MovieCast({ movie }) {
   
 
   const cast = credits?.cast || [];
-  const mainCast = cast.slice(0, 5); // Get first 5 cast members
+  const mainCast = cast.slice(0, 10); // Get first 10 cast members
 
   return (
     <div className="cast-container">
