@@ -1,10 +1,10 @@
 import React from "react";
 import { useParams } from 'react-router';
-import MovieDetails from "../components/movieDetails/";
 import PageTemplate from "../components/templatePersonPage";
 import { getPerson } from '../api/tmdb-api'
 import { useQuery } from '@tanstack/react-query';
 import Spinner from '../components/spinner'
+import PersonDetails from "../components/personDetails";
 // import useMovie from "../hooks/useMovie";
 
 const PersonPage = (props) => {
@@ -13,6 +13,7 @@ const PersonPage = (props) => {
     queryKey: ['person', {id: id}],
     queryFn: getPerson,
   })
+  
 
   if (isPending) {
     return <Spinner />;
@@ -27,13 +28,11 @@ const PersonPage = (props) => {
       {person ? (
         <>
           <PageTemplate person={person}>
-            {person.name}
-            {person.biography}
-            {person.birthday}
+            <PersonDetails person={person} />
           </PageTemplate>
         </>
       ) : (
-        <p>Waiting for movie details</p>
+        <p>Waiting for person details...</p>
       )}
     </>
   );
