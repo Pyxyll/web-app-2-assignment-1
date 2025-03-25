@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -15,9 +15,12 @@ import Grid from "@mui/material/Grid2";
 import img from "../../images/film-poster-placeholder.png";
 import Avatar from "@mui/material/Avatar";
 import { MoviesContext } from "../../contexts/moviesContext";
+import Box from "@mui/material/Box";
+import Fade from "@mui/material/Fade";
 
 export default function MovieCard({ movie, action }) {
   const { favorites, addToFavorites } = useContext(MoviesContext);
+  const [isHovered, setIsHovered] = useState(false);
 
   if (favorites.find((id) => id === movie.id)) {
     movie.favorite = true;
@@ -36,29 +39,88 @@ export default function MovieCard({ movie, action }) {
 
   return (
     <Card
-    sx={{ height: 550, backgroundImage: `url(${moviePoster})`, backgroundSize: "cover", backgroundPosition: "center" }}>
+      sx={{
+        height: 550,
+        backgroundImage: `url(${moviePoster})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        position: "relative",
+        cursor: "pointer",
+        borderRadius: "20px",
+        transition: "transform 0.2s",
+        "&:hover": {
+          transform: "scale(1.05)",
+          boxShadow: "0 2px 10px 5px rgba(0, 0, 0, 0.3)",
+        },
+      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <Typography
+                variant="h6"
+                component="p"
+                sx={{
+                  color: "white",
+                  background: "linear-gradient(135deg, rgba(63,81,181,1) 0%, rgba(33,150,243,1) 100%)",
+                  position: "absolute",
+                  top: 10,
+                  left: 10,
+                  padding: "0px 15px",
+                  borderRadius: "20px",
+                }}
+              >
+                <StarRateIcon fontSize="small" />
+                {movie.vote_average}
+              </Typography>
+      {movie.favorite && (
+        <Avatar
+          sx={{
+            backgroundColor: "red",
+            position: "absolute",
+            top: 10,
+            right: 10,
+          }}
+        >
+          <FavoriteIcon />
+        </Avatar>
+      )}
 
-
-
-      {/* <CardHeader
-        avatar={
-          movie.favorite ? (
-            <Avatar sx={{ backgroundColor: "red" }}>
-              <FavoriteIcon />
-            </Avatar>
-          ) : null
-        }
-        title={
-          <Typography variant="h5" component="p">
-            {movie.title}{" "}
+      <Fade in={isHovered}>
+        <Box
+          sx={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            backgroundColor: "rgba(0, 0, 0, 0.7)",
+            padding: 2,
+            textAlign: "center",
+            borderRadius: "20px 20px 0 0",
+          }}
+        >
+          <Typography variant="h5" component="div" sx={{ color: "white" }}>
+            {movie.title} {action(movie)}
           </Typography>
-        }
-      /> */}
-
-      <CardMedia
-
-      />
-
+          <Box sx={{ mt: 1 }}>
+            <Link to={`/movies/${movie.id}`} style={{ textDecoration: "none" }}>
+              <Button
+                variant="contained"
+                size="medium"
+                sx={{
+                  backgroundColor: "rgba(255,255,255,0.9)",
+                  color: "black",
+                  fontWeight: "bold",
+                  "&:hover": {
+                    backgroundColor: "rgba(255,255,255,1)",
+                  },
+                }}
+              >
+                More Info ...
+              </Button>
+            </Link>
+          </Box>
+        </Box>
+      </Fade>
     </Card>
   );
 }
