@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 import img from "../../images/film-poster-placeholder.png";
 import Box from "@mui/material/Box";
 import Fade from "@mui/material/Fade";
+import { Link } from "react-router";
 
 export default function ActorCard({ actor }) {
   const [isHovered, setIsHovered] = useState(false);
@@ -13,6 +14,7 @@ export default function ActorCard({ actor }) {
     : img;
 
   return (
+    <Link to={`/person/${actor.id}`}>
     <Card
       key={actor.id}
       className="cast-item"
@@ -55,5 +57,6 @@ export default function ActorCard({ actor }) {
         </Box>
       </Fade>
     </Card>
+    </Link>
   );
 }
