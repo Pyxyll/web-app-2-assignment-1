@@ -10,7 +10,7 @@ import UpcomingMoviesPage from './pages/upcomingMoviesPage'
 import PopularMoviesPage from './pages/popularMoviesPage'
 import NowPlayingMoviesPage from './pages/nowPlayingMoviesPage'
 import TopRatedMoviesPage from './pages/topRatedMoviesPage'
-import PersonPage from './pages/personDetailsPage'
+import PersonPage from './pages/personPage'
 import SiteHeader from './components/siteHeader'
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
