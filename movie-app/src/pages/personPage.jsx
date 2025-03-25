@@ -5,6 +5,7 @@ import { getPerson } from '../api/tmdb-api'
 import { useQuery } from '@tanstack/react-query';
 import Spinner from '../components/spinner'
 import PersonDetails from "../components/personDetails";
+import PersonMovies from "../components/personMovies";
 // import useMovie from "../hooks/useMovie";
 
 const PersonPage = (props) => {
@@ -29,6 +30,7 @@ const PersonPage = (props) => {
         <>
           <PageTemplate person={person}>
             <PersonDetails person={person} />
+            <PersonMovies person={person} />
           </PageTemplate>
         </>
       ) : (
