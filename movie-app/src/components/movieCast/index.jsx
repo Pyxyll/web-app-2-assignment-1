@@ -2,53 +2,59 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getMovieCredits } from "../../api/tmdb-api";
 import Spinner from "../spinner";
-
-const EmptyState = ({ message }) => (
-    <StyledPaper sx={{ p: 3, my: 3, textAlign: 'center' }}>
-      <MovieIcon sx={{ fontSize: 60, color: 'text.secondary', opacity: 0.6, mb: 2 }} />
-      <Typography variant="h6" color="text.secondary">
-        {message}
-      </Typography>
-    </StyledPaper>
-  );
+import ActorCard from "../actorCard";
+import { Typography } from "@mui/material";
+import Grid from "@mui/material/Grid2";
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import Box from "@mui/material/Box";
 
 export default function MovieCast({ movie }) {
-  const { data: credits, error, isPending, isError } = useQuery({
+  const {
+    data: credits,
+    error,
+    isPending,
+    isError,
+  } = useQuery({
     queryKey: ["movieCredits", { id: movie.id }],
     queryFn: getMovieCredits,
   });
 
-    if (isPending) {
-      return <Spinner />;
-    }
-  
-    if (isError) {
-      return <EmptyState message={`Error: ${error.message}`} />;
-    }
-  
+  if (isPending) {
+    return <Spinner />;
+  }
+
+  if (isError) {
+    return <Typography message={`Error: ${error.message}`} />;
+  }
 
   const cast = credits?.cast || [];
-  const mainCast = cast.slice(0, 10); // Get first 10 cast members
+  const mainCast = cast.slice(0, 12); // Get first 10 cast members
 
   return (
-    <div className="cast-container">
-      <h3>Main Cast</h3>
-      <div className="cast-list">
+    <>
+    <Box sx={{ p: 3, pb: 0 }}>
+      <Typography
+        variant="h5"
+        component="h2"
+        gutterBottom
+        sx={{
+          fontWeight: 700,
+          display: "flex",
+          alignItems: "center",
+          gap: 1,
+        }}
+      >
+        <PeopleAltIcon color="primary" />
+        Cast
+      </Typography>
+      </Box>
+      <Grid container spacing={2}>
         {mainCast.map((actor) => (
-          <div key={actor.id} className="cast-item">
-            <img
-              src={
-                actor.profile_path
-                  ? `https://image.tmdb.org/t/p/w200${actor.profile_path}`
-                  : "/placeholder-image.png"
-              }
-              alt={actor.name}
-            />
-            <div className="actor-name">{actor.name}</div>
-            <div className="character-name">as {actor.character}</div>
-          </div>
+          <Grid size={{ xs: 12, sm: 6, md: 4, lg: 4, xl: 2 }} key={actor.id}>
+            <ActorCard actor={actor} key={actor.id} />
+          </Grid>
         ))}
-      </div>
-    </div>
+      </Grid>
+    </>
   );
 }
