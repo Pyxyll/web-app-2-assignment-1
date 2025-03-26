@@ -9,12 +9,12 @@ import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import Slider from "@mui/material/Slider"; // Add this import
+import Box from "@mui/material/Box"; // Add this import
 import img from "../../images/pexels-dziana-hasanbekava-5480827.jpg";
 import { getGenres } from "../../api/tmdb-api";
 import { useQuery } from '@tanstack/react-query';
 import Spinner from '../spinner';
-
-
 
 const formControl = {
   margin: 1,
@@ -53,6 +53,10 @@ export default function FilterMoviesCard(props) {
     handleChange(e, "genre", e.target.value);
   };
 
+  // Add handler for vote average change
+  const handleVoteAverageChange = (e, newValue) => {
+    handleChange(e, "vote_average", newValue);
+  };
 
   return (
     <Card
@@ -129,6 +133,29 @@ export default function FilterMoviesCard(props) {
             })}
           </Select>
         </FormControl>
+        
+        <Box sx={{ 
+          ...formControl, 
+          backgroundColor: "white", 
+          padding: 2, 
+          borderRadius: 2, 
+          marginTop: 2 
+        }}>
+          <Typography id="vote-average-slider" gutterBottom color="primary">
+            Minimum Rating: {props.voteAverageFilter || 0}
+          </Typography>
+          <Slider
+            aria-labelledby="vote-average-slider"
+            value={props.voteAverageFilter || 0}
+            onChange={handleVoteAverageChange}
+            valueLabelDisplay="auto"
+            step={0.5}
+            marks
+            min={0}
+            max={10}
+            sx={{ color: "primary.main" }}
+          />
+        </Box>
       </CardContent>
     </Card>
   );

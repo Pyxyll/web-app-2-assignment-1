@@ -5,9 +5,9 @@ import MovieList from "../movieList";
 import Grid from "@mui/material/Grid2";
 
 function MovieListPageTemplate({ movies, title, action }) {
-
   const [nameFilter, setNameFilter] = useState("");
   const [genreFilter, setGenreFilter] = useState("0");
+  const [voteAverageFilter, setVoteAverageFilter] = useState(0); // Add this state
   const genreId = Number(genreFilter);
 
   let displayedMovies = movies
@@ -16,11 +16,15 @@ function MovieListPageTemplate({ movies, title, action }) {
     })
     .filter((m) => {
       return genreId > 0 ? m.genre_ids.includes(genreId) : true;
+    })
+    .filter((m) => {
+      return m.vote_average >= voteAverageFilter; // Add this filter
     });
 
   const handleChange = (type, value) => {
     if (type === "name") setNameFilter(value);
-    else setGenreFilter(value);
+    else if (type === "genre") setGenreFilter(value);
+    else if (type === "vote_average") setVoteAverageFilter(value); // Add this condition
   };
 
   return (
@@ -28,11 +32,12 @@ function MovieListPageTemplate({ movies, title, action }) {
       <Grid size={12}>
         <Header title={title} />
 
-          <FilterCard
-            onUserInput={handleChange}
-            titleFilter={nameFilter}
-            genreFilter={genreFilter}
-          />
+        <FilterCard
+          onUserInput={handleChange}
+          titleFilter={nameFilter}
+          genreFilter={genreFilter}
+          voteAverageFilter={voteAverageFilter} // Pass this new prop
+        />
       </Grid>
       <Grid container sx={{flex: "1 1 500px"}}>
         <MovieList action={action} movies={displayedMovies}></MovieList>
