@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
@@ -9,8 +9,8 @@ import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import Slider from "@mui/material/Slider"; // Add this import
-import Box from "@mui/material/Box"; // Add this import
+import Slider from "@mui/material/Slider";
+import Box from "@mui/material/Box"; 
 import img from "../../images/pexels-dziana-hasanbekava-5480827.jpg";
 import { getGenres } from "../../api/tmdb-api";
 import { useQuery } from '@tanstack/react-query';
@@ -53,7 +53,6 @@ export default function FilterMoviesCard(props) {
     handleChange(e, "genre", e.target.value);
   };
 
-  // Add handler for vote average change
   const handleVoteAverageChange = (e, newValue) => {
     handleChange(e, "vote_average", newValue);
   };
